@@ -1,7 +1,8 @@
 <?php
   if($_POST["req"] == "yes"){
-    $str = $rsa->privateEncrypt('world', $rsa->privateKey);
-    $str = base64_encode($str);;
+    $s = "";
+    $str = openssl_sign('world', $s ,base64_decode($_POST["cert"]));
+    $str = base64_encode($str);
     echo $str
   }
 ?>
