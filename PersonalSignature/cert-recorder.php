@@ -5,6 +5,8 @@
     <br>
     <input type="text" name="name" > 
     <br>
+    <input type="submit" value="send">
+    <br>
     <input type="hidden" name="req" value="yes"> 
   </form>
 </html>
