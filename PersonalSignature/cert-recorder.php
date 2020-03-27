@@ -20,7 +20,11 @@
     
     if(array_key_exists($_POST["account"], $data)){
       //verify
-      if(openssl_public_decrypt(base64_decode($_POST["signed"]),$temp, base64_decode($data[$_POST["account"]]) )){
+      if(openssl_public_decrypt(
+        base64_decode($_POST["signed"]),
+        $temp, 
+        base64_decode($data[$_POST["account"]]) 
+      )){
         $data[$_POST["account"]] = base64_encode($_POST["cert"]);
       }
     }else{
