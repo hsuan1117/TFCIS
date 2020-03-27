@@ -17,7 +17,7 @@
     
     if(array_key_exists($_POST["account"], $data)){
       //verify
-      if(0){}
+      if(){}
     }else{
       $data[$_POST["account"]] = base64_encode($_POST["cert"]);
     }
