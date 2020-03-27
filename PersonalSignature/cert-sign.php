@@ -1,4 +1,5 @@
 <?php
+  $signature = ""
   if($_POST["submit"] == "submit"){
   	//私鑰
     $key = base64_decode($_POST["key"]);
