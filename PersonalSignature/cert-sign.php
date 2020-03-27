@@ -1,7 +1,15 @@
-<!--
- * HNoteBook
- * 版本: V1.0.0
--->
+<?php
+  if($_POST["submit"] == "submit"){
+  	//私鑰
+    $key = base64_decode($_POST["key"]);
+    
+    
+    $s = "";
+    $str = openssl_sign('world', $s ,);
+    $str = base64_encode($str);
+    echo $str;
+  }
+?>
 <html>
 	<head>
 		<meta charset="utf-8" />
@@ -20,57 +28,33 @@
 				font-family: FF, serif;
 			}
 		</style>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Hsuan 線上計時器</title>
+		<title>TFCIS Sign</title>
 	</head>
 
 	<body>
 		<div id="app">
 			<el-container>
-				<el-header>Hsuan 線上計時器</el-header>
+				<el-header>TFCIS Sign</el-header>
 				<el-main>
 					<el-row>
-						<el-switch v-model="mode" active-text="正計時" inactive-text="倒計時" @change="stop()"></el-switch>
+					    <el-card v-if="signature != ''">
+					        {{signature}}
+					    </el-card>
 					</el-row>
-					<br>
 					<el-row>
-						<el-button @click="start()" :disabled="started">
-							開始計時
-						</el-button>
-						<el-button @click="stop()" :disabled="!started">
-							停止計時
-						</el-button>
+						<el-form>
+  							<el-form-item label="私鑰">
+    								<el-input placeholder="私鑰" native-name="key"></el-input>
+							</el-form-item>
+							<el-form-item label="內容">
+    								<el-input placeholder="內容" native-name="content"></el-input>
+							</el-form-item>
+  							<el-form-item>
+    								<el-button type="primary" native-type="submit">送出</el-button>
+    								<el-input placeholder="私鑰" native-name="hidden" native-value="submit"></el-input>
+  							</el-form-item>
+						</el-form>
 					</el-row>
-					<br>
-					<el-row>
-						<el-date-picker v-model="timeValue" type="datetime" v-if="mode == false" placeholder="選擇時間" @change="stop();start()" :default-time="timeValue">
-						</el-date-picker>
-					</el-row>
-					<div v-if="mode == true && started == true">
-						時間已經過了
-						<span v-if="duringTime < 60">{{duringTime}}秒</span>
-						<span v-if="60 <= duringTime && duringTime < 3600">
-							{{Math.floor(duringTime/60)}}分鐘{{(duringTime%60)}}秒
-						</span>
-						<span v-if="3600 <= duringTime && duringTime < 86400">
-							{{Math.floor(duringTime/3600)}}小時{{Math.floor((duringTime%3600)/60)}}分鐘{{(duringTime%60)}}秒
-						</span>
-					</div>
-					<div v-if="mode == false && started == true">
-						剩下
-						<span v-if="lastTime < 60">{{lastTime}}秒</span>
-						<span v-if="60 <= lastTime && lastTime < 3600">
-							{{Math.floor(lastTime/60)}}分鐘{{(lastTime%60)}}秒
-						</span>
-						<span v-if="3600 <= lastTime && lastTime < 86400">
-							{{Math.floor(lastTime/3600)}}小時{{Math.floor((lastTime%3600)/60)}}分鐘{{(lastTime%60)}}秒
-						</span>
-						<span v-if="86400 <= lastTime">
-							{{Math.floor(lastTime/86400)}}天{{Math.floor((lastTime%86400)/3600)}}小時{{Math.floor((lastTime%3600)/60)}}分鐘{{(lastTime%60)}}秒
-						</span>
-					</div>
-					<br>
-					{{time}}
 				</el-main>
 			</el-container>
 
@@ -78,73 +62,16 @@
 	</body>
 
 	<script>
-		var TimerApp = new Vue({
+		var Signer = new Vue({
 			el: '#app',
 			data: {
-				"timeValue": "",
-				"mode": true,
-				"timer": {},
-				"duringTime": 0,
-				"lastTime": 0,
-				"nowTS": 0,
-				"started": false,
-				"time": new Date().toLocaleString()
+				privateKey:"",
+				signature :"<?=signature ?>"
 			},
 			methods: {
-				start() {
-					
-					if (TimerApp.mode == true) {
-						//正計時
-						TimerApp.timer = setInterval(function() {
-							TimerApp.duringTime++
-						}, 1000)
-						TimerApp.started = true
-					} else {
-						//倒計時
-						if(TimerApp.timeValue.getTime() - Date.now() < 0){
-							 this.$message.error('請選擇正確的時間');
-						}
-						
-						TimerApp.lastTime = Math.floor((TimerApp.timeValue.getTime() - TimerApp.nowTS) / 1000);
-						TimerApp.timer = setInterval(function() {
-							TimerApp.lastTime--
-						}, 1000)
-						TimerApp.started = true
-					}
-				},
-				stop() {
-					window.clearInterval(TimerApp.timer)
-					TimerApp.started = false
-				}
-			},
-			watch: {
-				lastTime: function(s) {
-					if (s < 0) {
-						this.stop()
-					}
-				}
+			    
 			}
 		})
-		$(document).ready(function() {
-			setInterval(function() {
-				TimerApp.time = new Date().toLocaleString()
-				TimerApp.nowTS = Date.now()
-				DataSave()
-			}, 1000)
-			DataGet()
-		})
-
-		function DataGet() {
-			$.getScript("https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js", function() {
-				if (typeof Cookies.get("timerData") != "undefined") {
-					TimerApp.timeValue = new Date(Cookies.get("timerData"))
-				}
-			})
-		}
-
-		function DataSave() {
-			Cookies.set("timerData", TimerApp.timeValue.toString())
-		}
 	</script>
 	<style>
 		.el-header,
@@ -167,11 +94,3 @@
 		}
 	</style>
 </html>
-<?php
-  if($_POST["req"] == "yes"){
-    $s = "";
-    $str = openssl_sign('world', $s ,base64_decode($_POST["cert"]));
-    $str = base64_encode($str);
-    echo $str;
-  }
-?>
