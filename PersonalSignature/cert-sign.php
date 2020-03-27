@@ -68,7 +68,7 @@
 			el: '#app',
 			data: {
 				privateKey:"",
-				signature :"<?php echo signature; ?>",
+				signature :"<?=$signature; ?>",
 				content:""
 			},
 			methods: {
