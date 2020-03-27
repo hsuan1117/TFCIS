@@ -39,7 +39,7 @@
 				<el-header>TFCIS Sign</el-header>
 				<el-main>
 					<el-row>
-					    <el-card v-if="signature != ''" :>
+					    <el-card v-if="signature != ''" >
 					        {{signature}}
 					    </el-card>
 					</el-row>
