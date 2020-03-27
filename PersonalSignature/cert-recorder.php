@@ -17,7 +17,7 @@
       //verify
       if(0){}
     }else{
-      $data[$_POST["account"]] = $_POST["account"];
+      $data[$_POST["account"]] = base64_encode($_POST["cert"]);
     }
     
     file_put_contents($DataFile,json_encode($data));
