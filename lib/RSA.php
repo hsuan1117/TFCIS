@@ -25,4 +25,7 @@ class Rsa {
         openssl_private_decrypt($data, $decrypted, $privateKey);
         return $decrypted;
     }
+    public function verify($data,$publicKey){
+        return openssl_public_decrypt($data , $decrypted , $publicKey);
+    }
 }
