@@ -5,7 +5,7 @@
     
     
     $s = "";
-    $str = openssl_sign('world', $s ,);
+    $str = openssl_sign('world', $s ,$key);
     $str = base64_encode($str);
     echo $str;
   }
