@@ -1,6 +1,7 @@
 <?php
+  ini_set("display_errors", TRUE);
   $signature = "";
-  if($_POST["submit"] == "submit"){
+  if(isset($_POST["submit"])){
   	//私鑰
     $key = base64_decode($_POST["key"]);
     
