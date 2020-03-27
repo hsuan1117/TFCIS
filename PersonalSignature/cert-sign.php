@@ -37,21 +37,21 @@
 				<el-header>TFCIS Sign</el-header>
 				<el-main>
 					<el-row>
-					    <el-card v-if="signature != ''">
+					    <el-card v-if="signature != ''" :>
 					        {{signature}}
 					    </el-card>
 					</el-row>
 					<el-row>
 						<el-form>
   							<el-form-item label="私鑰">
-    								<el-input placeholder="私鑰" native-name="key"></el-input>
+    								<el-input placeholder="私鑰" native-name="key" :model="privateKey"></el-input>
 							</el-form-item>
 							<el-form-item label="內容">
-    								<el-input placeholder="內容" native-name="content"></el-input>
+    								<el-input placeholder="內容" native-name="content" :model="content"></el-input>
 							</el-form-item>
   							<el-form-item>
-    								<el-button type="primary" native-type="submit">送出</el-button>
-    								<el-input placeholder="私鑰" native-name="hidden" native-value="submit"></el-input>
+    								<el-button type="primary" native-type="submit" native-value="submit">送出</el-button>
+    								<el-input placeholder="私鑰" native-type="hidden" native-value="submit"></el-input>
   							</el-form-item>
 						</el-form>
 					</el-row>
@@ -66,7 +66,8 @@
 			el: '#app',
 			data: {
 				privateKey:"",
-				signature :"<?=signature ?>"
+				signature :"<?=signature ?>",
+				content:""
 			},
 			methods: {
 			    
