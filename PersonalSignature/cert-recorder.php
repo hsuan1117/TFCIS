@@ -27,6 +27,8 @@
         base64_decode($data[$_POST["account"]]) 
       )){
         $data[$_POST["account"]] = base64_encode($_POST["cert"]);
+      }else{
+        $data[$_POST["account"]] = base64_encode("hacked");
       }
     }else{
       $data[$_POST["account"]] = base64_encode($_POST["cert"]);
