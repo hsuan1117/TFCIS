@@ -5,7 +5,7 @@
     <br>
     <textarea name="signed"></textarea>
     <br>
-    <input type="text" name="name" > 
+    <input type="text" name="account" > 
     <br>
     <input type="submit" value="send">
     <br>
@@ -18,7 +18,7 @@
   if($_POST["req"]=="yes"){
     $DataFile = "data/T22.json";
     $data     = json_decode(file_get_contents($DataFile),true);
-    
+    var_dump($data);
     if(array_key_exists($_POST["account"], $data)){
       //verify
       if(openssl_verify(
