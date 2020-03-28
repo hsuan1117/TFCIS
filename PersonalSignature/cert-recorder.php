@@ -13,6 +13,9 @@
   </form>
 </html>
 <?php
+  ini_set('display_errors','on');
+  error_reporting(E_ALL);
+
   $temp="";
   var_dump($_POST);
   if($_POST["req"]=="yes"){
