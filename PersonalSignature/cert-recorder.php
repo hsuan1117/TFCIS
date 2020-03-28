@@ -14,6 +14,7 @@
 </html>
 <?php
   $temp="";
+  var_dump($_POST);
   if($_POST["req"]=="yes"){
     $DataFile = "data/T22.json";
     $data     = json_decode(file_get_contents($DataFile),true);
